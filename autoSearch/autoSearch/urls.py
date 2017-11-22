@@ -18,13 +18,16 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from carros import views
-from carros.views import car_list, car_detail, home
+from carros.views import CarListView,CarDetailView, home
+from carros.views import CarCreateView, CarUpdateView, CarDeleteView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     url(r'^$',views.home, name='home.html'),
-    url(r'^car_list$',car_list.as_view(),name='car_list'),
-    url(r'^car_detail/(?P<id>[0-9]+)/$', car_detail.as_view(), name='car_detail'),
+    url(r'^car/create$',CarCreateView.as_view(), name = 'CarCreate'),
+    url(r'^car/detail/(?P<pk>[0-9]+)/edit/$',CarUpdateView.as_view(), name = 'CarUpdate'),
+    url(r'^car/detail/(?P<pk>[0-9]+)/delete/$',CarDeleteView.as_view(), name = 'CarDelete'),
+    url(r'^car/detail/(?P<id>[0-9]+)/$', CarDetailView.as_view(), name = 'CarDetail'),
+    url(r'^car/list$', CarListView.as_view(), name = 'CarList'),
 
-
- ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+    url(r'^admin/', admin.site.urls),
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

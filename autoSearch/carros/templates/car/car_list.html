@@ -1,0 +1,51 @@
+{% extends "car/base.html" %}
+
+{%block search%}
+{% include "car/search_view.html" %}<br/>
+{%endblock%}
+{%block content%}
+{% if not request.GET.q %}
+<div class="">
+  {%include "car/form.html" with form=create_form action_url=create_url btn_title='Marca'%}
+  <!-- <p class="image is-32x32">
+    <img src="http://bulma.io/images/placeholders/128x128.png
+  </p> -->
+</div>
+{% endif %}
+
+{% for object in object_list %}
+<article class="post">
+
+<h4>{{object}}</h4>
+<span class="pull-right has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
+<div class="media">
+
+  <div class="media-left">
+
+    <!-- <p class="image is-32x32">
+      <img src="http://bulma.io/images/placeholders/128x128.png">
+    </p> -->
+  </div>
+
+  <div class="media-content">
+    <div class="content">
+      <p>
+
+        <a href="/car/detail/{{object.id}}/">View</a> {{object.created|timesince}} {{object.user}}&nbsp;   <a href="/car/detail/{{object.id}}/delete">Delete</a> <a href="/car/detail/{{object.id}}/edit">Editar</a>
+        <!-- <span class="tag">Question</span> -->
+      </p>
+
+    </div>
+  </div>
+
+</div>
+
+</article>
+{%empty%}
+{% if request.GET.q %}
+  <p>No car found.</p>
+  {% else %}
+  <p>No car yet.</p>
+{% endif %}
+{% endfor %}
+{% endblock %}
